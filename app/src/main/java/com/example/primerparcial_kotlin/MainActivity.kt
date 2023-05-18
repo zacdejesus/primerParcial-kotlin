@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerStudent)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val students: List<Student> = listOf(Student(name = "Pedro"))
+        val students: List<Student> = listOf(Student(name = "jose"), Student(name = "Jose"))
         recyclerView.adapter = StudentAdapter(students)
     }
 }
