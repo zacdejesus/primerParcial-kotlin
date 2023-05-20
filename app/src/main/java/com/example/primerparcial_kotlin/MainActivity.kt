@@ -3,24 +3,34 @@ package com.example.primerparcial_kotlin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.primerparcial_kotlin.adapter.StudentAdapter
+import com.example.primerparcial_kotlin.databinding.ActivityMainBinding
 import com.example.primerparcial_kotlin.models.Student
-import com.example.primerparcial_kotlin.viewModels.MainActivityViewModel
+import com.example.primerparcial_kotlin.viewModels.StudentsManager
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel = MainActivityViewModel()
+    private val studentsManager = StudentsManager()
     private var students = mutableListOf<Student>()
 
     private lateinit var adapter: StudentAdapter
-    private lateinit var recyclerView: RecyclerView
+
+
+    private  lateinit var binding: ActivityMainBinding
 
     // LifeCycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val button = findViewById<Button>(R.id.addStudentButton)
+
+        button.setOnClickListener {
+            showAddStudentsActivity()
+        }
 
         addStudents10AskedDueRequirements()
         initRecyclerView()
@@ -39,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             Student("Josefa", age = "10", photo = "https://www.shutterstock.com/image-photo/happy-student-taking-notes-while-260nw-1860471403.jpg"),
             Student("Alexandra", age = "10", photo = "https://www.shutterstock.com/image-photo/happy-student-taking-notes-while-260nw-1860471403.jpg"))
 
-        viewModel.saveStudentListToSharedPreferences(this,studentList)
+        studentsManager.saveStudentListToSharedPreferences(this,studentList)
     }
 
     private fun showAddStudentsActivity() {
@@ -51,19 +61,20 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         // This code block is called every time the Activity is shown
 
-        students = viewModel.retrieveStudentListFromSharedPreferences(context = this)
+        students = studentsManager.retrieveStudentListFromSharedPreferences(context = this)
         adapter = StudentAdapter(students)
-        recyclerView.adapter = adapter
+        binding.recyclerStudent.adapter = adapter
         adapter.notifyDataSetChanged()
     }
 
     // Methods
     private fun initRecyclerView() {
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerStudent)
-        recyclerView.layoutManager = LinearLayoutManager(this)
 
-        adapter = StudentAdapter(viewModel.retrieveStudentListFromSharedPreferences(this))
-        recyclerView.adapter = adapter
+
+        binding.recyclerStudent.layoutManager = LinearLayoutManager(this)
+
+        adapter = StudentAdapter(studentsManager.retrieveStudentListFromSharedPreferences(this))
+        binding.recyclerStudent.adapter = adapter
 
         adapter.notifyDataSetChanged()
     }

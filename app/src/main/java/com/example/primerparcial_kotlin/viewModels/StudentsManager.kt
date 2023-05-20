@@ -5,7 +5,7 @@ import com.example.primerparcial_kotlin.models.Student
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class MainActivityViewModel {
+class StudentsManager {
     fun saveStudentListToSharedPreferences(context: Context, studentList: MutableList<Student>) {
         val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val gson = Gson()

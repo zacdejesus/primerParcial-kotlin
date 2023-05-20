@@ -1,18 +1,16 @@
 package com.example.primerparcial_kotlin
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.primerparcial_kotlin.models.Student
-import com.example.primerparcial_kotlin.viewModels.SecondActivityViewModel
+import com.example.primerparcial_kotlin.viewModels.StudentsManager
 
 class SecondActivity : AppCompatActivity() {
 
-    val viewModel = SecondActivityViewModel()
+    private val studentsManager = StudentsManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +35,12 @@ class SecondActivity : AppCompatActivity() {
         val photo = photoEditText.text.toString()
 
         if (name != "" && age != "") {
-            val students = viewModel.retrieveStudentListFromSharedPreferences(context = this)
+            val students = studentsManager.retrieveStudentListFromSharedPreferences(context = this)
 
             val studentToAdd = Student(name, age, photo)
             students.add(0, studentToAdd)
 
-            viewModel.saveStudentListToSharedPreferences(context = this, studentList = students)
+            studentsManager.saveStudentListToSharedPreferences(context = this, studentList = students)
 
             finish()
 
