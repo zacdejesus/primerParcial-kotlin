@@ -17,6 +17,6 @@ class StudentsManager {
         val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val studentListJson = sharedPreferences.getString("studentListKey", null)
         val gson = Gson()
-        return gson.fromJson(studentListJson, object : TypeToken<List<Student>>() {}.type)
+        return gson.fromJson(studentListJson, object : TypeToken<MutableList<Student>>() {}.type)
     }
 }

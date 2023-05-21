@@ -2,7 +2,6 @@ package com.example.primerparcial_kotlin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -13,18 +12,16 @@ class DetailActivity : AppCompatActivity() {
 
     private val studentsManager = StudentsManager()
     private lateinit var student: Student
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
         val receivedBundle = intent.extras
         if (receivedBundle != null) {
-            val studenNameFromBundle = receivedBundle.getString("studentName")
+            val studentNameFromBundle = receivedBundle.getString("studentName")
             val students = studentsManager.retrieveStudentListFromSharedPreferences(this)
 
-            student = students.first { student -> student.name == studenNameFromBundle }
+            student = students.first { student -> student.name == studentNameFromBundle }
 
             val detailImage = findViewById<ImageView>(R.id.imageViewDetail)
             Glide.with(this).load(student.photo).into(detailImage)
